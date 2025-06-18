@@ -1,0 +1,29 @@
+----------Vite---------
+#npm create vite@latest
+#project name : vp
+#React
+#Javascript
+#cd vp
+#vp>npm install
+#vp>npm run dev
+
+--------------Tailwind------------
+#npm install tailwindcss @tailwindcss/vite
+
+-----vite.config.js
+import { defineConfig } from 'vite'
+import tailwindcss from '@tailwindcss/vite'
+export default defineConfig({
+  plugins: [
+    tailwindcss(),
+  ],
+})
+-------src->App.css
+#@import "tailwindcss";  //menstion on Top
+-----start the server:
+#npm run dev
+
+
+
+
+
