@@ -1,0 +1,194 @@
+//Original one-liner:
+products.filter(p => (category ? p.category === category : true));
+
+//Equivalent if...else version:
+const filtered = [];
+
+for (let p of products) {
+  if (category) {
+    if (p.category === category) {
+      filtered.push(p);
+    }
+  } else {
+    // No category selected, include everything
+    filtered.push(p);
+  }
+}
+
+
+# Example to understand it better:
+const category = "Clothing"; // try changing this to "" or null
+const products = [
+  { name: "Shirt", category: "Clothing" },
+  { name: "iPhone", category: "Electronics" },
+  { name: "Book", category: "Books" },
+];
+
+const filtered = [];
+
+for (let p of products) {
+  if (category) {   //Clothing
+    if (p.category === category) { //Clothing === Clothing   -> true
+      filtered.push(p);
+    }
+  } else {
+    filtered.push(p);
+  }
+}
+
+console.log(filtered);
+// Output: [{ name: "Shirt", category: "Clothing" }]
+
+If you set:
+const category = "";
+
+Then the output becomes:
+[
+  { name: "Shirt", category: "Clothing" },
+  { name: "iPhone", category: "Electronics" },
+  { name: "Book", category: "Books" }
+]
+
+
+=======================Sorting========================
+
+const numbers = [10, 5, 8, 1];
+
+const asc = numbers.slice().sort((a, b) => a - b);   // [1, 5, 8, 10]
+const desc = numbers.slice().sort((a, b) => b - a);  // [10, 8, 5, 1]
+
+console.log("Ascending:", asc);
+console.log("Descending:", desc);
+
+
+===================Filter====================
+
+const numbers = [3, 10, 7, 15, 2];
+const lessThanOrEqualTo7 = numbers.filter(n => n <= 7);
+
+console.log(lessThanOrEqualTo7); // Output: [3, 7, 2]
+
+
+#######
+const products = [
+  { name: "Shirt", price: 800 },
+  { name: "Laptop", price: 45000 },
+  { name: "Cap", price: 300 },
+  { name: "Watch", price: 1200 }
+];
+
+const affordableProducts = products.filter(p => p.price <= 1000);
+
+console.log(affordableProducts);
+
+
+==========================Condition==================
+
+const age = 18;
+
+if (age <= 18) {
+  console.log("You are eligible.");
+} else {
+  console.log("Not eligible.");
+}
+// Output: "You are eligible."
+
+
+
+=======================Explain code===============
+# Let's say we already have this cart:
+const prevCart = [
+  { id: 1, name: "Shirt", price: 500, quantity: 1 },
+  { id: 2, name: "Cap", price: 200, quantity: 2 }
+];
+
+const product = { id: 2, name: "Cap", price: 200 };
+
+
+# When we run the code:
+const existing = prevCart.find(item => item.id === product.id);  //1 == 2 false,  2 === 2 true
+// existing = { id: 2, name: "Cap", price: 200, quantity: 2 }
+
+if (existing) {
+  return prevCart.map(item =>
+    item.id === product.id
+      ? { ...item, quantity: item.quantity + 1 } // Increase Cap quantity
+      : item
+  );
+}
+
+# Result:
+[
+  { id: 1, name: "Shirt", price: 500, quantity: 1 },
+  { id: 2, name: "Cap", price: 200, quantity: 3 }
+]
+
+
+# Another Example (Product not in cart):
+js:
+const product = { id: 3, name: "Jeans", price: 1000 };
+
+No matching item found → existing = undefined
+
+So else block runs:
+js:
+return [...prevCart, { ...product, quantity: 1 }];
+
+# Result:
+[
+  { id: 1, name: "Shirt", price: 500, quantity: 1 },
+  { id: 2, name: "Cap", price: 200, quantity: 2 },
+  { id: 3, name: "Jeans", price: 1000, quantity: 1 }
+]
+
+
+Product exists in cart (existing) - Update its quantity (+1)
+Product not in cart - Add it to cart with quantity: 1
+
+
+
+//===================✅ Function Explanation====================
+
+const decreaseQuantity = (id) => {
+  setCart((prevCart) =>
+    prevCart
+      .map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+      )
+      .filter((item) => item.quantity > 0)
+  );
+};
+
+1. Takes a product id as input.
+
+2. Updates the cart using setCart().
+
+3. Inside setCart():
+
+* map() is used to:
+
+          * Loop over each item.
+          * If the item's id matches, reduce its quantity by 1.
+          * If not, leave it unchanged.
+* filter() is used to:
+         * Remove any item from the cart that now has quantity <= 0.       
+
+🔁 Example Input (Before clicking ➖):
+[
+  { id: 1, name: 'T-Shirt', quantity: 2 },
+  { id: 2, name: 'Laptop', quantity: 1 }
+]
+If id === 1 is passed to decreaseQuantity():
+✅ Output (After click ➖):
+[
+  { id: 1, name: 'T-Shirt', quantity: 1 },
+  { id: 2, name: 'Laptop', quantity: 1 }
+]
+If id === 2 is passed (Laptop), quantity becomes 0 and it's removed:
+[
+  { id: 1, name: 'T-Shirt', quantity: 1 }
+]
+
+
+🧪 Simple Example to Understand
+Imagine a cart with just numbers (representing quantities) and you want to decrease a number by 1 but remove it if it reaches 0:

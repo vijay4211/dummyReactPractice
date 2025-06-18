@@ -29,6 +29,7 @@ export default function Ecommerce() {
   const addToCart = (product) => {
     setCart((prevCart) => {
       const existing = prevCart.find((item) => item.id === product.id);
+
       if (existing) {
         return prevCart.map((item) =>
           item.id === product.id
@@ -111,8 +112,8 @@ export default function Ecommerce() {
           style={{ marginBottom: 10 }}
           className="flex items-center border justify-between"
         >
-          <strong>{item.name}</strong> - ₹{item.price} × {item.quantity}
-          <div className="ml-20 border">
+          <strong>{item.name}</strong> ₹{item.price} × {item.quantity}
+          <div>
             <button
               onClick={() => addToCart(item)}
               className="bg-green-200 px-4 py-1"
