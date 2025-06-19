@@ -1,3 +1,14 @@
+
+
+
+
+
+
+
+
+
+
+
 //Original one-liner:
 products.filter(p => (category ? p.category === category : true));
 
@@ -192,3 +203,92 @@ If id === 2 is passed (Laptop), quantity becomes 0 and it's removed:
 
 🧪 Simple Example to Understand
 Imagine a cart with just numbers (representing quantities) and you want to decrease a number by 1 but remove it if it reaches 0:
+
+const cart = [3, 2, 1];
+const updatedCart = cart
+  .map((qty, index) => index === 2 ? qty - 1 : qty)
+  .filter(qty => qty > 0);
+
+console.log(updatedCart); // Output: [3, 2]
+
+Here:
+
+* We decreased the value at index 2 (which was 1) to 0
+* Then filtered out 0
+
+
+========================🧪 Dummy Example Code (Independent Working Example)============
+let cart = [
+  { id: 1, name: "T-Shirt", quantity: 2 },
+  { id: 2, name: "Laptop", quantity: 1 },
+  { id: 3, name: "Shoes", quantity: 3 }
+];
+
+function decreaseQuantity(id) {
+  const updated = cart.map(item =>
+    item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+  );
+  const filtered = updated.filter(item => item.quantity > 0);
+  cart = filtered; // update cart
+  console.log("Updated cart:", cart);
+}
+
+// Usage
+decreaseQuantity(2); // Laptop quantity goes from 1 ➝ 0, so it gets removed
+
+
+🧾 Output in console:
+Updated cart: [
+  { id: 1, name: "T-Shirt", quantity: 2 },
+  { id: 3, name: "Shoes", quantity: 3 }
+]
+
+Laptop is gone because its quantity hit 0.
+
+
+
+
+==============================✅ Increment Function (Plain JavaScript Example)========================
+
+let cart = [
+  { id: 1, name: "T-Shirt", quantity: 2 },
+  { id: 2, name: "Laptop", quantity: 1 },
+  { id: 3, name: "Shoes", quantity: 3 }
+];
+
+function increaseQuantity(id) {
+  cart = cart.map(item =>
+    item.id === id
+      ? { ...item, quantity: item.quantity + 1 }
+      : item
+  );
+  console.log("Updated cart:", cart);
+}
+
+// Usage:
+increaseQuantity(2); // Increase Laptop quantity from 1 ➝ 2
+
+🧾 Output in console:
+
+Updated cart: [
+  { id: 1, name: "T-Shirt", quantity: 2 },
+  { id: 2, name: "Laptop", quantity: 2 },
+  { id: 3, name: "Shoes", quantity: 3 }
+]
+
+✅ How It Works:
+* map() creates a new array from the old cart.
+* It checks each item:
+       * If the id matches, returns a new item with quantity + 1.
+       * Else, returns the item as is.
+* Finally, it replaces the original cart with the updated version.
+
+
+
+
+
+
+
+
+
+
